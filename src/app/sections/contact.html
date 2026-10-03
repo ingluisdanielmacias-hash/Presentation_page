@@ -1,0 +1,43 @@
+<section id="contacto" class="section dark contact">
+  <header class="sec-head"><span class="idx">06</span>Contacto</header>
+
+  <h2 class="big" reveal aria-label="¿Hablamos?">
+    @for (ch of bigWord; track $index) {
+      <span class="big__ch" aria-hidden="true">{{ ch }}</span>
+    }
+  </h2>
+
+  <div class="mail-row" reveal [revealDelay]="120">
+    <a magnetic [strength]="0.15" class="mail" [href]="'mailto:' + p.email" data-cursor="ESCRIBE">
+      {{ p.email }} <span class="mail__arrow">↗</span>
+    </a>
+    <button type="button" class="btn" (click)="copyEmail()">
+      {{ copied() ? '¡Copiado!' : 'Copiar correo' }}
+    </button>
+  </div>
+
+  <div class="info">
+    <div class="info__cell" reveal [revealDelay]="0">
+      <p class="mono label">Teléfono</p>
+      <a [href]="p.phoneHref" class="info__value">{{ p.phone }}</a>
+    </div>
+    <div class="info__cell" reveal [revealDelay]="90">
+      <p class="mono label">Ubicación</p>
+      <p class="info__value">{{ p.location }}</p>
+    </div>
+    <div class="info__cell" reveal [revealDelay]="180">
+      <p class="mono label">Currículum</p>
+      <a [href]="p.cv" download class="info__value" data-cursor="PDF">Descargar PDF ↓</a>
+    </div>
+    <div class="info__cell" reveal [revealDelay]="270">
+      <p class="mono label">Disponibilidad</p>
+      <p class="info__value">Abierto a nuevas oportunidades</p>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <p class="mono">© {{ year }} {{ p.fullName }}</p>
+    <p class="mono">Hecho con Angular — en blanco y negro</p>
+    <a class="mono up" href="#inicio" (click)="top($event)">Volver arriba ↑</a>
+  </footer>
+</section>

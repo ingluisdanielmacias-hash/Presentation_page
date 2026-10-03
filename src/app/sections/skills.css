@@ -1,0 +1,221 @@
+:host {
+  display: block;
+}
+
+.skills {
+  padding-top: clamp(4rem, 8vw, 6.5rem);
+  padding-bottom: clamp(4rem, 8vw, 6.5rem);
+}
+
+.skills .sec-head {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 1.5rem 4rem;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.heading {
+  font-size: clamp(3rem, 7.5vw, 7rem);
+}
+
+.row {
+  display: block;
+}
+
+.lead {
+  max-width: 42ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.55;
+}
+
+/* Rejilla brutalista con bordes de 2px */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 2px solid var(--ink);
+  border-left: 2px solid var(--ink);
+}
+
+.cell {
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.cell.featured {
+  grid-column: span 2;
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  height: 100%;
+  min-height: 15rem;
+  padding: clamp(1.4rem, 2.5vw, 2.2rem);
+  transition: color 0.45s var(--ease);
+}
+
+/* Cortina negra que sube al pasar el mouse */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ink);
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease);
+}
+
+.card:hover {
+  color: var(--paper);
+}
+
+.card:hover::before {
+  transform: translateY(0);
+}
+
+.featured .card {
+  color: var(--paper);
+}
+
+.featured .card::before {
+  transform: none;
+}
+
+.featured .card:hover {
+  color: var(--ink);
+}
+
+.featured .card:hover::before {
+  transform: translateY(-101%);
+}
+
+.card__head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.card__title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.featured .card__title {
+  font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.chips li {
+  padding: 0.4rem 0.85rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: transform 0.35s var(--ease);
+}
+
+.chips li:hover {
+  transform: translateY(-3px) rotate(-3deg);
+}
+
+.featured .chips li {
+  font-size: 0.9rem;
+  padding: 0.55rem 1.1rem;
+}
+
+/* Celda final: llamada a la acción */
+.cta-cell {
+  grid-column: span 2;
+}
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  height: 100%;
+  min-height: 15rem;
+  padding: clamp(1.4rem, 2.5vw, 2.2rem);
+  background: repeating-linear-gradient(-45deg, var(--ink) 0 2px, transparent 2px 14px);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    background-color 0.4s var(--ease),
+    color 0.4s var(--ease);
+}
+
+.cta .mono {
+  align-self: flex-start;
+  padding: 0.3rem 0.7rem;
+  background: var(--paper);
+}
+
+.cta__big {
+  align-self: flex-start;
+  padding: 0 0.15em;
+  background: var(--paper);
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 6vw, 5.5rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.cta .arrow {
+  display: inline-block;
+  transition: transform 0.5s var(--ease);
+}
+
+.cta:hover {
+  background-color: var(--ink);
+}
+
+.cta:hover .arrow {
+  transform: translateX(0.25em);
+}
+
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .intro {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cell.featured,
+  .cta-cell {
+    grid-column: auto;
+  }
+
+  .card {
+    min-height: 0;
+  }
+}

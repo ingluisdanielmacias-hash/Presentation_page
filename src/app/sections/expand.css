@@ -1,0 +1,272 @@
+:host {
+  --p: 0;
+  display: block;
+}
+
+/* Sección alta: el escenario se queda fijo (sticky) mientras recorres 160vh */
+.xp {
+  position: relative;
+  height: 260svh;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+/* ---------- Fondo ---------- */
+.bg {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: calc(1 - var(--p) * 1.4);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center;
+  transform: scale(calc(1 + var(--p) * 0.25));
+}
+
+.bg__word {
+  font-family: var(--display);
+  font-size: clamp(12rem, 48vw, 46rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+  opacity: 0.18;
+  white-space: nowrap;
+}
+
+/* ---------- Panel que crece ---------- */
+.media {
+  --w0: min(320px, 72vw);
+  --h0: min(420px, 56svh);
+  position: relative;
+  z-index: 1;
+  width: calc(var(--w0) + (100vw - var(--w0)) * var(--p));
+  height: calc(var(--h0) + (100svh - var(--h0)) * var(--p));
+  border-radius: calc(18px * (1 - var(--p)));
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 30px 80px rgba(10, 10, 10, calc(0.35 * (1 - var(--p))));
+  container-type: size;
+  will-change: width, height;
+}
+
+.window {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.window__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+  padding: clamp(0.6rem, 2.2cqh, 1.2rem) clamp(0.8rem, 3cqw, 2rem);
+  margin-top: calc(var(--p) * 4.2rem);
+  border-bottom: 1px solid rgba(243, 243, 239, 0.15);
+}
+
+.window__bar span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--paper);
+}
+
+.window__bar span:first-child {
+  background: var(--paper);
+}
+
+.window__file {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+/* El tamaño del código se ajusta al tamaño del panel (container queries) */
+.code {
+  flex: 1;
+  display: grid;
+  align-content: safe center;
+  justify-content: safe center;
+  margin: 0;
+  padding: clamp(0.8rem, 4cqh, 3rem) clamp(0.8rem, 4cqw, 4rem);
+  font-family: var(--mono);
+  font-size: clamp(0.5rem, min(2.35cqw, 4.6cqh), 1.6rem);
+  line-height: 1.75;
+  white-space: pre;
+  overflow: hidden;
+}
+
+.ln {
+  display: block;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    opacity 0.35s var(--ease),
+    transform 0.5s var(--ease);
+}
+
+.ln.on {
+  opacity: 1;
+  transform: none;
+}
+
+.ln__n {
+  display: inline-block;
+  width: 2.6em;
+  opacity: 0.3;
+  user-select: none;
+}
+
+.kw {
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.fn {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.key {
+  font-weight: 600;
+}
+
+.str {
+  opacity: 0.7;
+}
+
+.cm {
+  opacity: 0.45;
+  font-style: italic;
+}
+
+/* Velo que se aclara al expandirse (como el overlay del original) */
+.shade {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ink);
+  opacity: calc(0.55 - var(--p) * 0.55);
+  pointer-events: none;
+}
+
+/* Etiquetas que se alejan a los lados */
+.tag {
+  position: absolute;
+  left: 50%;
+  white-space: nowrap;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.tag--left {
+  top: calc(100% + 1.1rem);
+  transform: translateX(calc(-50% - var(--p) * 70vw));
+}
+
+.tag--right {
+  top: calc(100% + 2.6rem);
+  transform: translateX(calc(-50% + var(--p) * 70vw));
+  animation: nudge 1.6s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  50% {
+    translate: 0 4px;
+  }
+}
+
+/* Mensaje final cuando el panel ya llenó la pantalla */
+.final {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.5rem, 6cqh, 3.5rem);
+  padding: 0.6rem 1.1rem;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.8s var(--ease);
+}
+
+:host(.done) .final {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- Título partido ---------- */
+.split {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.05em;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 13vw, 13rem);
+  line-height: 0.86;
+  text-transform: uppercase;
+  color: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.split__a {
+  transform: translateX(calc(var(--p) * -75vw));
+}
+
+.split__b {
+  transform: translateX(calc(var(--p) * 75vw));
+}
+
+@media (max-width: 760px) {
+  .xp {
+    height: 220svh;
+  }
+
+  .media {
+    --w0: 72vw;
+    --h0: 50svh;
+  }
+}
+
+/* Con movimiento reducido: panel ya expandido, sin recorrido extra */
+@media (prefers-reduced-motion: reduce) {
+  .xp {
+    height: auto;
+  }
+
+  .stage {
+    position: relative;
+  }
+
+  .split,
+  .tag,
+  .bg {
+    display: none;
+  }
+}

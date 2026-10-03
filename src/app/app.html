@@ -1,0 +1,16 @@
+<app-preloader (finished)="ready.set(true)" />
+<app-cursor />
+<app-nav />
+
+<main>
+  <app-hero [ready]="ready()" />
+  <app-expand />
+  <app-about />
+  <app-experience />
+  <app-skills />
+  <app-competencies />
+  <app-education />
+  <app-contact />
+</main>
+
+<div class="grain" aria-hidden="true"></div>

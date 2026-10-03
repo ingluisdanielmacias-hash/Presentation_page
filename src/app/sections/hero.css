@@ -1,0 +1,197 @@
+:host {
+  display: block;
+}
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 6.2rem var(--pad) 2rem;
+  overflow: hidden;
+}
+
+/* Entradas escalonadas cuando termina la pantalla de carga */
+.fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s var(--ease),
+    transform 1.1s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.ready .fade {
+  opacity: 1;
+  transform: none;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 3;
+}
+
+.dim {
+  opacity: 0.45;
+}
+
+.clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--paper);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+/* ---------- Nombre gigante ---------- */
+.name {
+  align-self: end;
+  position: relative;
+  z-index: 2;
+  margin-top: 2rem;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.3rem, 15vw, 16.5rem);
+  line-height: 0.84;
+  text-transform: uppercase;
+  color: #fff;
+  mix-blend-mode: difference;
+}
+
+.line {
+  display: block;
+}
+
+.line.outline {
+  color: transparent;
+  -webkit-text-stroke: clamp(1.5px, 0.18vw, 3px) #fff;
+  padding-left: 0.6em;
+}
+
+/* ---------- Pie del hero ---------- */
+.bottom {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
+  margin-top: clamp(1.8rem, 4vw, 3rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.role {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 2rem;
+  font-family: var(--mono);
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.prompt {
+  opacity: 0.45;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  background: var(--paper);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.cta {
+  order: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-left: auto;
+}
+
+.scroll {
+  order: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+}
+
+.scroll .track {
+  position: relative;
+  width: 1.5px;
+  height: 46px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.scroll .track span {
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  animation: drop 1.8s var(--ease-in-out) infinite;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding-top: 5.4rem;
+  }
+
+
+  .line.outline {
+    padding-left: 0;
+  }
+
+  .scroll {
+    display: none;
+  }
+
+  .cta {
+    width: 100%;
+  }
+
+  .cta .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}

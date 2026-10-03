@@ -1,0 +1,33 @@
+<section id="formacion" class="section light edu">
+  <header class="sec-head"><span class="idx">05</span>Formación</header>
+
+  <h2 class="title heading">
+    <span reveal="clip" class="row">Formación <span class="outline">&amp; logros</span></span>
+  </h2>
+
+  <div class="cols">
+    @for (col of columns; track col.title; let c = $index) {
+      <div class="col">
+        <h3 class="col__title mono" reveal>{{ col.title }}</h3>
+        <ol class="list">
+          @for (item of col.items; track item.title; let i = $index) {
+            <li reveal [revealDelay]="i * 110 + c * 80" class="item" [class.has-badge]="!!item.badge">
+              <p class="item__period mono">{{ item.period }}</p>
+              <div class="item__body">
+                <h4 class="item__title">{{ item.title }}</h4>
+                <p class="item__place">{{ item.place }}</p>
+                <p class="item__detail">{{ item.detail }}</p>
+              </div>
+              @if (item.badge) {
+                <div class="stamp" aria-hidden="true">
+                  <span class="stamp__big">4.º</span>
+                  <span class="stamp__small">Lugar estatal</span>
+                </div>
+              }
+            </li>
+          }
+        </ol>
+      </div>
+    }
+  </div>
+</section>
